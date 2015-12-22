@@ -17,5 +17,11 @@ RUN curl -o /opt/es211.tar.gz "https://download.elasticsearch.org/elasticsearch/
     chown -R elasticsearch:elasticsearch /opt/elasticsearch-2.1.1/ && \
     rm -rf /opt/es211.tar.gz
 
+RUN /opt/elasticsearch/bin/plugin install http://download.elastic.co/elasticsearch/release/org/elasticsearch/plugin/license/2.1.1/license-2.1.1.zip && \
+    /opt/elasticsearch/bin/plugin install http://download.elastic.co/elasticsearch/release/org/elasticsearch/plugin/marvel-agent/2.1.1/marvel-agent-2.1.1.zip
+
+ADD docker/supervisor.d /etc/supervisor.d
+RUN chmod -R +x /etc/supervisor.d/
+
 EXPOSE 9200
 EXPOSE 9300
