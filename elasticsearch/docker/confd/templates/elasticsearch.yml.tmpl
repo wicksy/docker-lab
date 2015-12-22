@@ -1,0 +1,5 @@
+cluster.name: {{if exists "/elasticsearch/cluster/name"}}{{getv "/elasticsearch/cluster/name"}}{{else}}elasticdocker{{end}}
+path.data: {{if exists "/elasticsearch/path/data"}}{{getv "/elasticsearch/path/data"}}{{else}}/opt/elasticsearch/data/{{end}}
+path.logs: {{if exists "/elasticsearch/path/logs"}}{{getv "/elasticsearch/path/logs"}}{{else}}/var/log/elasticsearch/{{end}}
+network.host: {{if exists "/elasticsearch/network/host"}}{{getv "/elasticsearch/network/host"}}{{else}}0.0.0.0{{end}}
+http.port: {{if exists "/elasticsearch/http/port"}}{{getv "/elasticsearch/http/port"}}{{else}}9200{{end}}

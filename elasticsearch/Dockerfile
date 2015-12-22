@@ -18,7 +18,10 @@ RUN curl -o /opt/es211.tar.gz "https://download.elasticsearch.org/elasticsearch/
     rm -rf /opt/es211.tar.gz
 
 RUN /opt/elasticsearch/bin/plugin install http://download.elastic.co/elasticsearch/release/org/elasticsearch/plugin/license/2.1.1/license-2.1.1.zip && \
-    /opt/elasticsearch/bin/plugin install http://download.elastic.co/elasticsearch/release/org/elasticsearch/plugin/marvel-agent/2.1.1/marvel-agent-2.1.1.zip
+    /opt/elasticsearch/bin/plugin install http://download.elastic.co/elasticsearch/release/org/elasticsearch/plugin/marvel-agent/2.1.1/marvel-agent-2.1.1.zip && \
+    pip install elasticsearch-curator==3.4.0
+
+ADD docker/confd /etc/confd
 
 ADD docker/supervisor.d /etc/supervisor.d
 RUN chmod -R +x /etc/supervisor.d/

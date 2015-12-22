@@ -1,0 +1,4 @@
+#!/bin/sh
+
+chown -R elasticsearch:elasticsearch /opt/elasticsearch*
+exec gosu elasticsearch /opt/elasticsearch/bin/elasticsearch
