@@ -13,3 +13,5 @@ RUN apk update && \
 ADD docker/supervisor.d /etc/supervisor.d
 RUN chmod -R +x /etc/supervisor.d/
 
+EXPOSE 80
+EXPOSE 443
