@@ -16,9 +16,6 @@ RUN apk update && \
     pip install pycrypto && \
     pip install msgpack-pure
 
-#ADD docker/conf/supervisord.conf /etc/supervisord.conf
-#ADD docker/supervisor.d /etc/supervisor.d
+ADD docker/supervisor.d /etc/supervisor.d
+RUN chmod -R +x /etc/supervisor.d/
 
-#RUN chmod -R +x /etc/supervisor.d/
-
-#CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]

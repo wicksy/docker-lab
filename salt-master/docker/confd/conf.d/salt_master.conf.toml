@@ -1,0 +1,6 @@
+[template]
+src = "salt_master.conf.tmpl"
+dest = "/etc/salt/master"
+keys = [
+    "/salt_master/master",
+]
