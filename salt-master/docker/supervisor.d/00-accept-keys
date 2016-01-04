@@ -2,12 +2,13 @@
 
 exit 0
 
-(count=0
+(sleep 20
+count=0
 keys=0
 saltup=0
 while [[ ${saltup} -eq 0 && ${count} -lt 12 ]] ;
 do
-  service salt-master status
+  pgrep -f salt-master 
   rc=$?
   if [[ ${rc} -eq 0 ]] ; then
     saltup=1
