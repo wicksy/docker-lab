@@ -16,6 +16,13 @@ RUN apk update && \
     pip install pycrypto && \
     pip install msgpack-pure
 
+RUN /bin/echo -e "tcp_keepalive_idle: 300\ntcp_keepalive: True\n" >> /etc/salt/minion
+
+RUN mkdir -p /srv/salt/_libs/base /srv/salt/salt-formulas /srv/pillar
+
+ADD docker/salt/_libs/base /srv/salt/_libs/base
+ADD docker/salt/top.sls /srv/salt/top.sls
+
 ADD docker/supervisor.d /etc/supervisor.d
 RUN chmod -R +x /etc/supervisor.d/
 
