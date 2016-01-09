@@ -8,3 +8,4 @@ Set of docker images based on Alpine Linux to keep container footprint nice and 
 - elasticsearch - Elasticsearch plus plugins
 - tiny-nginx    - Small footprint nginx
 - salt-master   - SaltStack Master/Minion to allow testing/development of new SLS, pillar data, config changes, etc
+- awscli        - Small environment to run AWS cli
