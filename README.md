@@ -9,3 +9,4 @@ Set of docker images based on Alpine Linux to keep container footprint nice and 
 - tiny-nginx    - Small footprint nginx
 - salt-master   - SaltStack Master/Minion to allow testing/development of new SLS, pillar data, config changes, etc
 - awscli        - Small environment to run AWS cli
+- synology      - Container used to run tasks on my Synology NAS (DS415plus) running Docker
