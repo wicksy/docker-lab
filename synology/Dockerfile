@@ -10,7 +10,9 @@ RUN apk update && \
     apk add git && \
     apk add git-bash-completion && \
     pip install --upgrade pip && \
-    pip install awscli
+    pip install awscli && \
+    pip install boto && \
+    pip install boto3
 
 ADD docker/root /root
 
