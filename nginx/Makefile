@@ -1,6 +1,7 @@
-image = wicksy/nginx
+.PHONY: build
 newtag ?= latest
+image = wicksy/nginx
 
 build:
-	docker build -t "${image}:latest" .
+	docker build --no-cache=true -t "${image}:latest" .
 	docker tag -f "${image}:latest" "${image}:${newtag}"

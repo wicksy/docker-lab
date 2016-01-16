@@ -1,6 +1,7 @@
-image = wicksy/salt-master
+.PHONY: build
 newtag ?= latest
+image = wicksy/salt-master
 
 build:
-	docker build -t "${image}:latest" .
+	docker build --no-cache=true -t "${image}:latest" .
 	docker tag -f "${image}:latest" "${image}:${newtag}"
