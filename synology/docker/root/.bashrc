@@ -2,3 +2,4 @@
 
 set -o vi
 source /usr/share/bash-completion/completions/git
+export PAGER=more

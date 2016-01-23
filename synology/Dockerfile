@@ -7,6 +7,7 @@ RUN apk update && \
     apk add wget && \
     apk add curl && \
     apk add vim && \
+    apk add groff && \
     apk add git && \
     apk add git-bash-completion && \
     pip install --upgrade pip && \
