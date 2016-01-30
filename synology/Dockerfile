@@ -1,5 +1,7 @@
 FROM alpine:latest
 
+ADD docker/py/requirements.txt /tmp/requirements.txt
+
 RUN apk update && \
     apk add bash && \
     apk add python && \
@@ -11,9 +13,7 @@ RUN apk update && \
     apk add git && \
     apk add git-bash-completion && \
     pip install --upgrade pip && \
-    pip install awscli && \
-    pip install boto && \
-    pip install boto3
+    pip install --requirement /tmp/requirements.txt
 
 ADD docker/root /root
 
