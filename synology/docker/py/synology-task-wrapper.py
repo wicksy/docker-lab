@@ -24,6 +24,7 @@
 
 # Imports
 #
+import git
 import os
 import shutil
 import sys
@@ -32,6 +33,7 @@ import sys
 #
 
 # Clean up and exit
+#
 def die(code):
 
   #shutil.rmtree(TMPDIR)
@@ -52,11 +54,25 @@ DSM_GIT_SECRETREPO = str(os.environ.get('DSM_GIT_SECRETREPO'))
 DSM_GIT_CODEREPO = str(os.environ.get('DSM_GIT_CODEREPO'))
 DSM_TASK_EXECUTE = str(os.environ.get('DSM_TASK_EXECUTE'))
 TMPDIR = '/tmp/synology-task-wrapper/'
+SECRETS = TMPDIR + 'secrets/'
+CODE = TMPDIR + 'code/'
+
+# Exit codes
+#
+EXIT_ALL_OK = 0
+EXIT_SECRETS_CLONE_FAIL=100
+EXIT_CODE_CLONE_FAIL=110
+
+# Clean down temp area
+#
+#shutil.rmtree(TMPDIR)
 
 # Get involved!
 #
-print("Secrets will be pulled from:" + DSM_GIT_SECRETREPO)
+print("Secrets will be pulled from: " + DSM_GIT_SECRETREPO)
+print("Secrets will be pulled into: " + SECRETS)
 print("Code will be pulled from: " + DSM_GIT_CODEREPO)
+print("Code will be pulled into: " + CODE)
 print("Task executed will be: " + DSM_TASK_EXECUTE)
 print("Temporary area will be: " + TMPDIR)
 
@@ -64,4 +80,25 @@ print("Temporary area will be: " + TMPDIR)
 #
 ensure_dir(TMPDIR)
 
-die(0)
+# Pull in secrets repo
+#
+print("Pulling secrets")
+try:
+  git.Repo.clone_from(str(DSM_GIT_SECRETREPO), str(SECRETS))
+except:
+  die(EXIT_SECRETS_CLONE_FAIL)
+
+# Pull in code repo
+#
+print("Pulling code")
+try:
+  git.Repo.clone_from(str(DSM_GIT_CODEREPO), str(CODE))
+except:
+  die(EXIT_CODE_CLONE_FAIL)
+
+
+
+
+
+
+die(EXIT_ALL_OK)
