@@ -1,3 +1,4 @@
 awscli
 boto
 boto3
+gitpython
