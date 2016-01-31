@@ -27,6 +27,7 @@
 import git
 import os
 import shutil
+import subprocess
 import sys
 
 # Functions
@@ -62,6 +63,7 @@ CODE = TMPDIR + 'code/'
 EXIT_ALL_OK = 0
 EXIT_SECRETS_CLONE_FAIL=100
 EXIT_CODE_CLONE_FAIL=110
+EXIT_TASK_FAIL=120
 
 # Clean down temp area
 #
@@ -96,9 +98,21 @@ try:
 except:
   die(EXIT_CODE_CLONE_FAIL)
 
+# Call task
+#
+print("Calling " + DSM_TASK_EXECUTE)
+TASK_ARRAY = DSM_TASK_EXECUTE.split()
+try:
+  PROCESS = subprocess.Popen(TASK_ARRAY, stdout=subprocess.PIPE)
+  PROCESS.wait()
+except:
+  die(EXIT_TASK_FAIL)
 
+# Show me
+#
+for LINE in PROCESS.stdout:
+  print(LINE)
 
-
-
-
+# Fin!
+#
 die(EXIT_ALL_OK)

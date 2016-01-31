@@ -12,6 +12,7 @@ RUN apk update && \
     apk add groff && \
     apk add git && \
     apk add git-bash-completion && \
+    apk add openssh-client && \
     pip install --upgrade pip && \
     pip install --requirement /tmp/requirements.txt
 
