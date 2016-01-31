@@ -17,5 +17,6 @@ RUN apk update && \
     pip install --requirement /tmp/requirements.txt
 
 ADD docker/root /root
+RUN chmod 700 /root/.ssh
 
 CMD ["/bin/bash", "-o", "vi"]
