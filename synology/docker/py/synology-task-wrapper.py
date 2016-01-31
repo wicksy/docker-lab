@@ -4,6 +4,7 @@
 #
 # Acts on a number of environment variables which derive what to do:
 #
+# DSM_PRIVATE_KEY         Private (SSH) key used to pull from repos (usually just secrets)
 # DSM_GIT_SECRETREPO      URL of git repository containing secrets e.g. keys
 # DSM_GIT_CODEREPO        URL of git repository containing tasks that can be run
 # DSM_TASK_EXECUTE        Task to execute (pulled in via git)
@@ -37,7 +38,12 @@ import sys
 #
 def die(code):
 
-  #shutil.rmtree(TMPDIR)
+  try:
+    shutil.rmtree(TMPDIR)
+  except:
+    print("Cleaning up")
+
+  KEYFILE.close()
 
   print("Exit with code " + str(code))
   sys.exit(code)
@@ -51,6 +57,7 @@ def ensure_dir(TMPDIR):
 
 # Get and set variables
 #
+DSM_PRIVATE_KEY = str(os.environ.get('DSM_PRIVATE_KEY'))
 DSM_GIT_SECRETREPO = str(os.environ.get('DSM_GIT_SECRETREPO'))
 DSM_GIT_CODEREPO = str(os.environ.get('DSM_GIT_CODEREPO'))
 DSM_TASK_EXECUTE = str(os.environ.get('DSM_TASK_EXECUTE'))
@@ -64,6 +71,7 @@ EXIT_ALL_OK = 0
 EXIT_SECRETS_CLONE_FAIL=100
 EXIT_CODE_CLONE_FAIL=110
 EXIT_TASK_FAIL=120
+EXIT_KEY_FILE=130
 
 # Clean down temp area
 #
@@ -71,12 +79,26 @@ EXIT_TASK_FAIL=120
 
 # Get involved!
 #
+print("Private key will be: REDACTED")
 print("Secrets will be pulled from: " + DSM_GIT_SECRETREPO)
 print("Secrets will be pulled into: " + SECRETS)
 print("Code will be pulled from: " + DSM_GIT_CODEREPO)
 print("Code will be pulled into: " + CODE)
 print("Task executed will be: " + DSM_TASK_EXECUTE)
 print("Temporary area will be: " + TMPDIR)
+
+# Write out our private key
+#
+REALKEY = eval(DSM_PRIVATE_KEY)
+IDENTITY = '/root/.ssh/private_key'
+try:
+  with open(IDENTITY, 'w') as KEYFILE:
+    KEYFILE.write(REALKEY)
+    os.chmod(IDENTITY, 0600)
+except:
+  die(EXIT_KEY_FILE)
+
+KEYFILE.close()
 
 # Make temp area
 #
