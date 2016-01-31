@@ -19,4 +19,8 @@ RUN apk update && \
 ADD docker/root /root
 RUN chmod 700 /root/.ssh
 
+RUN mkdir /scripts
+ADD docker/py/ /scripts
+RUN chmod -R +x /scripts
+
 CMD ["/bin/bash", "-o", "vi"]

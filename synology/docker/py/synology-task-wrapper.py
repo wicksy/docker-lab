@@ -40,8 +40,9 @@ def die(code):
 
   try:
     shutil.rmtree(TMPDIR)
+    print("Cleaned up")
   except:
-    print("Cleaning up")
+    print("Didn't clean up")
 
   KEYFILE.close()
 
@@ -64,6 +65,7 @@ DSM_TASK_EXECUTE = str(os.environ.get('DSM_TASK_EXECUTE'))
 TMPDIR = '/tmp/synology-task-wrapper/'
 SECRETS = TMPDIR + 'secrets/'
 CODE = TMPDIR + 'code/'
+IDENTITY = '/root/.ssh/private_key'
 
 # Exit codes
 #
@@ -80,6 +82,7 @@ EXIT_KEY_FILE=130
 # Get involved!
 #
 print("Private key will be: REDACTED")
+print("Private key will be written into: " + IDENTITY)
 print("Secrets will be pulled from: " + DSM_GIT_SECRETREPO)
 print("Secrets will be pulled into: " + SECRETS)
 print("Code will be pulled from: " + DSM_GIT_CODEREPO)
@@ -90,7 +93,7 @@ print("Temporary area will be: " + TMPDIR)
 # Write out our private key
 #
 REALKEY = eval(DSM_PRIVATE_KEY)
-IDENTITY = '/root/.ssh/private_key'
+print("Creating private key")
 try:
   with open(IDENTITY, 'w') as KEYFILE:
     KEYFILE.write(REALKEY)
