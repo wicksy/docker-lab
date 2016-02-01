@@ -16,6 +16,9 @@ RUN apk update && \
     pip install --upgrade pip && \
     pip install --requirement /tmp/requirements.txt
 
+# Tidy up apk cache
+RUN rm -rf /var/cache/apk/*
+
 ADD docker/root /root
 RUN chmod 700 /root/.ssh
 
