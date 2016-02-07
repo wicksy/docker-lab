@@ -4,10 +4,10 @@
 #
 # Acts on a number of environment variables which derive what to do:
 #
-# DSM_PRIVATE_KEY         Private (SSH) key used to pull from repos (usually just secrets)
-# DSM_GIT_SECRETREPO      URL of git repository containing secrets e.g. keys
-# DSM_GIT_CODEREPO        URL of git repository containing tasks that can be run
-# DSM_TASK_EXECUTE        Task to execute (pulled in via git)
+# DSM_PRIVATE_KEY         Private (SSH) key used to pull from repos (usually just secrets) - OPTIONAL
+# DSM_GIT_SECRETREPO      URL of git repository containing secrets e.g. keys - OPTIONAL
+# DSM_GIT_CODEREPO        URL of git repository containing tasks that can be run - OPTIONAL
+# DSM_TASK_EXECUTE        Task to execute (pulled in via git) - MANDATORY
 #
 # Other variables may be defined and passed to docker run (using an environments file) which can then be passed on
 # to the task being executed by this wrapper.
@@ -38,13 +38,16 @@ import sys
 #
 def die(code):
 
+  print("Cleaning up")
   try:
     shutil.rmtree(TMPDIR)
-    print("Cleaned up")
   except:
-    print("Didn't clean up")
+    pass
 
-  KEYFILE.close()
+  try:
+      KEYFILE.close()
+  except:
+    pass
 
   print("Exit with code " + str(code))
   sys.exit(code)
@@ -74,34 +77,56 @@ EXIT_SECRETS_CLONE_FAIL=100
 EXIT_CODE_CLONE_FAIL=110
 EXIT_TASK_FAIL=120
 EXIT_KEY_FILE=130
+EXIT_NO_TASK=140
 
 # Clean down temp area
 #
-#shutil.rmtree(TMPDIR)
+print("Cleaning up")
+try:
+  shutil.rmtree(TMPDIR)
+except:
+  pass
 
 # Get involved!
 #
-print("Private key will be: REDACTED")
-print("Private key will be written into: " + IDENTITY)
-print("Secrets will be pulled from: " + DSM_GIT_SECRETREPO)
-print("Secrets will be pulled into: " + SECRETS)
-print("Code will be pulled from: " + DSM_GIT_CODEREPO)
-print("Code will be pulled into: " + CODE)
-print("Task executed will be: " + DSM_TASK_EXECUTE)
 print("Temporary area will be: " + TMPDIR)
+if DSM_PRIVATE_KEY != 'None' and DSM_PRIVATE_KEY.strip():
+  print("Private key will be: REDACTED")
+  print("Private key will be written into: " + IDENTITY)
+else:
+  print("No Private key specified")
+
+if DSM_GIT_SECRETREPO != 'None' and DSM_GIT_SECRETREPO.strip():
+  print("Secrets will be pulled from: " + DSM_GIT_SECRETREPO)
+  print("Secrets will be pulled into: " + SECRETS)
+else:
+  print("No Secrets repository specified")
+
+if DSM_GIT_CODEREPO != 'None' and DSM_GIT_CODEREPO.strip():
+  print("Code will be pulled from: " + DSM_GIT_CODEREPO)
+  print("Code will be pulled into: " + CODE)
+else:
+  print("No Code repository specified")
+
+if DSM_TASK_EXECUTE != 'None' and DSM_TASK_EXECUTE.strip():
+  print("Task executed will be: " + DSM_TASK_EXECUTE)
+else:
+  print("No task specified in DSM_TASK_EXECUTE")
+  die(EXIT_NO_TASK)
 
 # Write out our private key
 #
-REALKEY = eval(DSM_PRIVATE_KEY)
-print("Creating private key")
-try:
-  with open(IDENTITY, 'w') as KEYFILE:
-    KEYFILE.write(REALKEY)
-    os.chmod(IDENTITY, 0600)
-except:
-  die(EXIT_KEY_FILE)
+if DSM_PRIVATE_KEY != 'None' and DSM_PRIVATE_KEY.strip():
+  REALKEY = eval(DSM_PRIVATE_KEY)
+  print("Creating private key")
+  try:
+    with open(IDENTITY, 'w') as KEYFILE:
+      KEYFILE.write(REALKEY)
+      os.chmod(IDENTITY, 0600)
+  except:
+    die(EXIT_KEY_FILE)
 
-KEYFILE.close()
+  KEYFILE.close()
 
 # Make temp area
 #
@@ -109,19 +134,21 @@ ensure_dir(TMPDIR)
 
 # Pull in secrets repo
 #
-print("Pulling secrets")
-try:
-  git.Repo.clone_from(str(DSM_GIT_SECRETREPO), str(SECRETS))
-except:
-  die(EXIT_SECRETS_CLONE_FAIL)
+if DSM_GIT_SECRETREPO != 'None' and DSM_GIT_SECRETREPO.strip():
+  print("Pulling secrets")
+  try:
+    git.Repo.clone_from(str(DSM_GIT_SECRETREPO), str(SECRETS))
+  except:
+    die(EXIT_SECRETS_CLONE_FAIL)
 
 # Pull in code repo
 #
-print("Pulling code")
-try:
-  git.Repo.clone_from(str(DSM_GIT_CODEREPO), str(CODE))
-except:
-  die(EXIT_CODE_CLONE_FAIL)
+if DSM_GIT_CODEREPO != 'None' and DSM_GIT_CODEREPO.strip():
+  print("Pulling code")
+  try:
+    git.Repo.clone_from(str(DSM_GIT_CODEREPO), str(CODE))
+  except:
+    die(EXIT_CODE_CLONE_FAIL)
 
 # Call task
 #
