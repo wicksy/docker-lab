@@ -5,6 +5,7 @@
 # Acts on a number of environment variables which derive what to do:
 #
 # DSM_PRIVATE_KEY         Private (SSH) key used to pull from repos (usually just secrets) - OPTIONAL
+# DSM_WORKSPACE           Directory designed as a workspace e.g. where git repos will be pulled into
 # DSM_GIT_SECRETREPO      URL of git repository containing secrets e.g. keys - OPTIONAL
 # DSM_GIT_CODEREPO        URL of git repository containing tasks that can be run - OPTIONAL
 # DSM_TASK_EXECUTE        Task to execute (pulled in via git) - MANDATORY
@@ -40,7 +41,7 @@ def die(code):
 
   print("Cleaning up")
   try:
-    shutil.rmtree(TMPDIR)
+    shutil.rmtree(DSM_WORKSPACE)
   except:
     pass
 
@@ -54,8 +55,8 @@ def die(code):
 
 # Make a directory
 #
-def ensure_dir(TMPDIR):
-  DIR = os.path.dirname(TMPDIR)
+def ensure_dir(MKDIR):
+  DIR = os.path.dirname(MKDIR)
   if not os.path.exists(DIR):
     os.makedirs(DIR)
 
@@ -64,11 +65,8 @@ def ensure_dir(TMPDIR):
 DSM_PRIVATE_KEY = str(os.environ.get('DSM_PRIVATE_KEY'))
 DSM_GIT_SECRETREPO = str(os.environ.get('DSM_GIT_SECRETREPO'))
 DSM_GIT_CODEREPO = str(os.environ.get('DSM_GIT_CODEREPO'))
+DSM_WORKSPACE = str(os.environ.get('DSM_WORKSPACE'))
 DSM_TASK_EXECUTE = str(os.environ.get('DSM_TASK_EXECUTE'))
-TMPDIR = '/tmp/synology-task-wrapper/'
-SECRETS = TMPDIR + 'secrets/'
-CODE = TMPDIR + 'code/'
-IDENTITY = '/root/.ssh/private_key'
 
 # Exit codes
 #
@@ -79,17 +77,18 @@ EXIT_TASK_FAIL=120
 EXIT_KEY_FILE=130
 EXIT_NO_TASK=140
 
-# Clean down temp area
-#
-print("Cleaning up")
-try:
-  shutil.rmtree(TMPDIR)
-except:
-  pass
-
 # Get involved!
 #
-print("Temporary area will be: " + TMPDIR)
+if DSM_WORKSPACE != 'None' and DSM_WORKSPACE.strip():
+  pass
+else:
+  DSM_WORKSPACE = '/tmp/synology-task-wrapper/'
+print("Temporary workspace will be: " + DSM_WORKSPACE)
+
+SECRETS = DSM_WORKSPACE + 'secrets/'
+CODE = DSM_WORKSPACE + 'code/'
+IDENTITY = '/root/.ssh/private_key'
+
 if DSM_PRIVATE_KEY != 'None' and DSM_PRIVATE_KEY.strip():
   print("Private key will be: REDACTED")
   print("Private key will be written into: " + IDENTITY)
@@ -114,6 +113,14 @@ else:
   print("No task specified in DSM_TASK_EXECUTE")
   die(EXIT_NO_TASK)
 
+# Clean down temp area
+#
+print("Cleaning up")
+try:
+  shutil.rmtree(DSM_WORKSPACE)
+except:
+  pass
+
 # Write out our private key
 #
 if DSM_PRIVATE_KEY != 'None' and DSM_PRIVATE_KEY.strip():
@@ -130,7 +137,7 @@ if DSM_PRIVATE_KEY != 'None' and DSM_PRIVATE_KEY.strip():
 
 # Make temp area
 #
-ensure_dir(TMPDIR)
+ensure_dir(DSM_WORKSPACE)
 
 # Pull in secrets repo
 #
