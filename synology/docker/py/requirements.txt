@@ -1,4 +1,5 @@
 awscli
 boto
 boto3
+filechunkio
 gitpython
