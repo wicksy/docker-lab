@@ -4,4 +4,4 @@ image = wicksy/base
 
 build:
 	docker build --no-cache=true -t "${image}:latest" .
-	docker tag -f "${image}:latest" "${image}:${newtag}"
+	docker tag "${image}:latest" "${image}:${newtag}"
