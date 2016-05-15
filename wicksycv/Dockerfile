@@ -6,6 +6,17 @@ RUN apk update && \
     pip install --upgrade pip && \
     pip install boto && \
     pip install boto3 && \
-    pip install mkdocs
+    pip install mkdocs && \
+    addgroup wicksy && \
+    adduser -h /home/wicksy -s /bin/bash -D -G wicksy wicksy && \
+    mkdir -p /data/cv/ && \
+    chown wicksy:wicksy /data/cv && \
+    chmod -R 755 /data
 
-CMD ["/bin/bash", "-o", "vi"]
+EXPOSE 8080
+VOLUME /data/cv
+
+USER wicksy
+WORKDIR /data/cv
+
+CMD ["/usr/bin/mkdocs", "serve", "--dev-addr", "0.0.0.0:8080", "--theme", "readthedocs"]
