@@ -17,5 +17,6 @@ EXPOSE 8080
 VOLUME /data/cv
 
 USER wicksy
+WORKDIR /data/cv
 
-CMD ["/bin/bash", "-o", "vi"]
+CMD ["/usr/bin/mkdocs", "serve", "--dev-addr", "0.0.0.0:8080", "--theme", "readthedocs"]
