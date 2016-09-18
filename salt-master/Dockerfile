@@ -1,6 +1,7 @@
 FROM wicksy/base:latest
 
-RUN echo "http://nl.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories && \
+RUN echo "http://nl.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories && \
+    echo "http://nl.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories && \
     echo "http://nl.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
 
 RUN apk update && \
