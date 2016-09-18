@@ -1,12 +1,18 @@
 .PHONY: build
 
+tagrepo = no
 currenttag = $(shell semvertag latest)
 newtag = $(shell semvertag bump patch)
 
 containers = awscli base elasticsearch jre-7 nginx salt-master synology tiny-nginx
 
 build:
+ifeq ($(tagrepo),yes)
+	@echo Tagging repo
 	semvertag tag ${newtag}
+else
+	echo Not tagging repo
+endif
 	$(MAKE) -C base newtag=${newtag}
 	$(MAKE) -C jre-7 newtag=${newtag}
 	$(MAKE) -C elasticsearch newtag=${newtag}
@@ -24,3 +30,12 @@ clean:
 	-docker kill `docker ps -aq`
 	-docker rm -vf `docker ps -aq`
 	-docker rmi  -f `docker images -q -f "dangling=true"`
+
+debug:
+ifeq ($(tagrepo),yes)
+	@echo Tagging repo
+	@echo Current tag: ${currenttag}
+	@echo New tag: ${newtag}
+else
+	@echo Not tagging repo
+endif
