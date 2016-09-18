@@ -4,8 +4,8 @@
 Set of docker images based on Alpine Linux to keep container footprint nice and small
 
 ### Build Status
-**Develop branch** https://travis-ci.org/wicksy/docker-lab.svg?branch=develop</br>
-**Master branch** https://travis-ci.org/wicksy/docker-lab.svg?branch=master</br>
+[![Build Status](https://travis-ci.org/wicksy/docker-lab.svg?branch=develop)](https://travis-ci.org/wicksy/docker-lab)
+[![Build Status](https://travis-ci.org/wicksy/docker-lab.svg?branch=master)](https://travis-ci.org/wicksy/docker-lab)
 
 ### Images
 
