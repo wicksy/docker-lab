@@ -11,6 +11,8 @@ RUN apk update && \
     apk add build-base && \
     apk add python-dev && \
     apk add salt && \
+    apk add salt-minion && \
+    apk add salt-master && \
     pip install --upgrade pip && \
     pip install pyyaml && \
     pip install tornado && \
@@ -23,7 +25,7 @@ RUN mkdir -p /etc/salt /srv/salt/_libs/base /srv/salt/salt-formulas /srv/pillar
 
 RUN /bin/echo -e "tcp_keepalive_idle: 300\ntcp_keepalive: True\n" >> /etc/salt/minion
 
-ADD docker/salt/_libs/base /srv/salt/_libs/base
+ADD docker/salt/base /srv/salt/base
 ADD docker/salt/top.sls /srv/salt/top.sls
 
 ADD docker/supervisor.d /etc/supervisor.d
