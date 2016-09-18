@@ -1,0 +1,12 @@
+sudo: required
+
+dist: trusty
+
+before_install:
+  - sudo apt-get -qq update
+  - sudo apt-get -y install python-pip make
+  - pyenv 2.7.10
+  - pip install semvertag
+
+script:
+ - make build
