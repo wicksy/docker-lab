@@ -5,6 +5,7 @@ RUN echo "http://nl.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories &
     echo "http://nl.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
 
 RUN apk update && \
+    apk upgrade musl && \
     apk add libzmq  && \
     apk add gcc && \
     apk add build-base && \
