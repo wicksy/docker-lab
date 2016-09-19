@@ -10,6 +10,7 @@ RUN apk update && \
     apk add gcc && \
     apk add build-base && \
     apk add python-dev && \
+    apk add openssl && \
     apk add salt && \
     apk add salt-minion && \
     apk add salt-master && \
