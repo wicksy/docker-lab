@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/wicksy/docker-lab.svg?branch=master)](https://travis-ci.org/wicksy/docker-lab) [![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)]()</br>
+[![Build Status](https://travis-ci.org/wicksy/docker-lab.svg?branch=master)](https://travis-ci.org/wicksy/docker-lab) [![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://github.com/wicksy/docker-lab/blob/master/LICENSE.md)</br>
 
 ## Docker Lab
 
