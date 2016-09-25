@@ -2,9 +2,9 @@
 
 arg="${1}"
 
-#set -e
-#set -u
-#set -o pipefail
+set -e
+set -u
+set -o pipefail
 
 error() {
   echo "===> Error on line ${1}"
