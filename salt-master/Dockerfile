@@ -22,7 +22,7 @@ RUN apk update && \
     pip install pycrypto && \
     pip install msgpack-pure
 
-RUN mkdir -p /etc/salt /srv/salt/_libs/base /srv/salt/salt-formulas /srv/pillar
+RUN mkdir -p /etc/salt /srv/salt/salt-formulas /srv/pillar
 
 RUN /bin/echo -e "tcp_keepalive_idle: 300\ntcp_keepalive: True\n" >> /etc/salt/minion
 
