@@ -7,6 +7,8 @@ RUN apk update && \
     apk add curl && \
     apk add supervisor && \
     apk add gnupg && \
+    apk add openssl && \
+    apk add file && \
     pip install --upgrade pip && \
     pip install awscli
 
