@@ -8,6 +8,7 @@ RUN apk update && \
     apk add py-pip && \
     apk add wget && \
     apk add curl && \
+    apk add file && \
     apk add vim && \
     apk add groff && \
     apk add git && \
