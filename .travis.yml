@@ -9,7 +9,8 @@ before_install:
   - sudo apt-get -y install make
   - python --version
   - pip install --upgrade pip
-  - pip install git+https://github.com/ministryofjustice/semvertag.git
+  - pip install git+https://github.com/wicksy/semvertag.git
 
 script:
  - make build
+ - test/test.sh
