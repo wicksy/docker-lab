@@ -3,6 +3,10 @@
 ## Docker Lab
 
 ### Overview
+
+![Docker logo](logos/docker.png "Docker")
+![Alpine Linux logo](logos/alpine.png "Alpine")
+
 Set of docker images based on Alpine Linux to keep container footprint nice and small (compared to say those base on Ubuntu
 or Phusion).
 
@@ -232,4 +236,3 @@ aws-cli/1.10.66 Python/2.7.12 Linux/4.4.17-boot2docker botocore/1.4.56
 62ad1042e4b0
 ➜  docker-lab git:(develop) ✗
 ```
-
