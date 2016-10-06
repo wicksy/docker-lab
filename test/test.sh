@@ -33,7 +33,7 @@ fi
 trap 'error $LINENO' ERR
 cleanup
 
-echo "==> Starting daemon images..."
+echo "===> Starting daemon images..."
 docker run -d -p 80:80 wicksy/nginx:latest
 docker run -d -p 8080:80 wicksy/tiny-nginx:latest
 docker run -d -p 9200:9200 wicksy/elasticsearch:latest
