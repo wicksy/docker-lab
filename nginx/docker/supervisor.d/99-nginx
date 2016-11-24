@@ -1,0 +1,12 @@
+#!/bin/sh
+
+mkdir -p /var/log/nginx /var/log/app
+
+while [[ ! -s /etc/nginx/conf.d/app.conf ]];
+do
+  echo "Waiting for templated configs..."
+  sleep 2
+done
+sleep 2
+
+exec /usr/sbin/nginx
