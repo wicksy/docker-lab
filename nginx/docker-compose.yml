@@ -1,0 +1,10 @@
+# Demo docker-compose file for nginx
+
+nginx:
+  image: wicksy/nginx:latest
+  ports:
+    - 80:80
+    - 443:443
+  environment:
+    - NGINX_ROOT=/var/lib/nginx/html
+    - NGINX_INDEX=index.html

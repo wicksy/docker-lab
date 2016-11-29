@@ -42,7 +42,7 @@ sleep 10
 
 echo "===> Testing nginx..."
 curl --progress-bar "http://${testhost}" \
-  | grep 'Welcome to nginx'
+  | grep 'Welcome to a Docker Nginx Demo'
 echo "===> Image nginx passed..."
 
 echo "===> Testing tiny-nginx..."

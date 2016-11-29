@@ -39,14 +39,94 @@ for lightweight init-like process management.
 
 #### nginx
 
-Simple out-of-the-box nginx HTTPD service. Map a volume into `/var/lib/nginx/html` to serve content.
+HTTPD service based on [nginx](https://nginx.org/en/). Templated configuration file to define an application root and index.
+
+Environment variables for the container:
 
 ```
-➜  ~ echo "Hello World" > ~/tmp/index.html
-➜  ~ docker run -d -p 80:80 -v /Users/wicksy/tmp/:/var/lib/nginx/html wicksy/nginx:latest
+NGINX_INDEX - set a custom index document, defaults to 'index.html' if unset
+NGINX_ROOT  - set a custom root path, defaults to '/app/public' if unset
+NGINX_SSL_FORCE_REDIRECT - if set then container will redirect all http traffic to https
+```
+
+Using the built in /app/public/index.html:
+
+```
+➜  ~ docker run -d -p 80:80 wicksy/nginx:latest
+5ab8af2b85de4c77b09d8b91e383bb1c176fdfd4ab5e506380bd3acfe4abf014
+➜  ~ curl "http://$(docker-machine ip docker-vm)"
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Hello World</title>
+    </head>
+    <body>
+        <div class="page-header" align=center>
+          <h1>Welcome to a Docker Nginx Demo</h1>
+        </div>
+        <div class="container" align=center>
+          <h3>Hello World</h3>
+        </div>
+    </body>
+</html>
+➜  ~
+```
+
+Example of mapping in a volume (with content) to a different document root and index document:
+
+```
+➜  ~ echo "Hello World" > ~/tmp/hello.html
+➜  ~ docker run -d -p 80:80 --env NGINX_ROOT=/var/lib/nginx/html --env NGINX_INDEX=hello.html -v /Users/wicksy/tmp/:/var/lib/nginx/html wicksy/nginx:latest
 e63ccbf47b199e64e2e39483801128075efb8180b5d9b676f43811298adbd811
 ➜  ~ curl "http://$(docker-machine ip docker-vm)"
 Hello World
+➜  ~
+```
+
+Sample docker-compose file:
+
+```
+➜  ~ cat docker-compose.yml
+# Demo docker-compose file for nginx
+
+nginx:
+  image: wicksy/nginx:latest
+  ports:
+    - 80:80
+    - 443:443
+  environment:
+    - NGINX_ROOT=/var/lib/nginx/html
+    - NGINX_INDEX=index.html
+
+➜  ~ docker-compose up -d
+Creating nginx_nginx_1
+➜  ~ curl "http://$(docker-machine ip docker-vm)"
+<!DOCTYPE html>
+<html>
+<head>
+<title>Welcome to nginx!</title>
+<style>
+    body {
+        width: 35em;
+        margin: 0 auto;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+    }
+</style>
+</head>
+<body>
+<h1>Welcome to nginx!</h1>
+<p>If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.</p>
+
+<p>For online documentation and support please refer to
+<a href="http://nginx.org/">nginx.org</a>.<br/>
+Commercial support is available at
+<a href="http://nginx.com/">nginx.com</a>.</p>
+
+<p><em>Thank you for using nginx.</em></p>
+</body>
+</html>
 ➜  ~
 ```
 
