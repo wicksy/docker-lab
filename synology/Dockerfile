@@ -5,7 +5,7 @@ ADD docker/py/requirements.txt /tmp/requirements.txt
 RUN apk update && \
     apk add bash && \
     apk add python && \
-    apk add py-pip && \
+    apk add py2-pip && \
     apk add wget && \
     apk add curl && \
     apk add file && \
