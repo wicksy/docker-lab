@@ -7,7 +7,8 @@ RUN apk update && \
 
 RUN chown -R nginx:www-data /var/lib/nginx && \
     mkdir -p /run/nginx /app/public /var/log/app && \
-    chown nginx:nginx /run/nginx /app/public /var/log/app
+    chown nginx:nginx /run/nginx /app/public /var/log/app && \
+    rm -f /etc/nginx/conf.d/default.conf
 
 ADD docker/supervisor.d /etc/supervisor.d
 RUN chmod -R +x /etc/supervisor.d/

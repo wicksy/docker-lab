@@ -47,7 +47,7 @@ echo "===> Image nginx passed..."
 
 echo "===> Testing tiny-nginx..."
 curl --progress-bar "http://${testhost}:8080" \
-  | grep 'Welcome to nginx'
+  | grep 'Welcome to nginx!'
 echo "===> Image tiny-nginx passed..."
 
 echo "===> Testing elasticsearch..."
