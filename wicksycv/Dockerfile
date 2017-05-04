@@ -7,6 +7,7 @@ RUN apk update && \
     pip install boto && \
     pip install boto3 && \
     pip install mkdocs && \
+    pip install mkdocs-material && \
     addgroup wicksy && \
     adduser -h /home/wicksy -s /bin/bash -D -G wicksy wicksy && \
     mkdir -p /data/cv/ && \
@@ -19,4 +20,4 @@ VOLUME /data/cv
 USER wicksy
 WORKDIR /data/cv
 
-CMD ["/usr/bin/mkdocs", "serve", "--dev-addr", "0.0.0.0:8080", "--theme", "readthedocs"]
+CMD ["/usr/bin/mkdocs", "serve", "--dev-addr", "0.0.0.0:8080", "--theme", "material"]
