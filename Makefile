@@ -15,6 +15,7 @@ else
 endif
 	$(MAKE) -C base newtag=${newtag}
 	$(MAKE) -C jre-7 newtag=${newtag}
+	$(MAKE) -C jre-8 newtag=${newtag}
 	$(MAKE) -C elasticsearch newtag=${newtag}
 	$(MAKE) -C nginx newtag=${newtag}
 	$(MAKE) -C salt-master newtag=${newtag}
