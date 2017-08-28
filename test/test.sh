@@ -75,13 +75,23 @@ docker run wicksy/salt-master:latest salt-call --version
 echo "===> Image salt-master passed..."
 
 echo "===> Testing jre-7..."
-docker run wicksy/jre-7:latest java -version
+docker run wicksy/jre-7:latest java -version 2>&1 \
+  | grep '^java version.*1\.7\.'
 echo "===> Image jre-7 passed..."
+echo "===> Testing jre-8..."
+docker run wicksy/jre-8:latest java -version 2>&1 \
+  | grep '^openjdk version.*1\.8\.'
+echo "===> Image jre-8 passed..."
 
 echo "===> Testing synology..."
 docker run wicksy/synology:latest file -b /scripts/synology-task-wrapper.py \
   | grep 'Python'
 echo "===> Image synology passed..."
+
+echo "===> Testing wicksycv..."
+docker run wicksy/wicksycv:latest mkdocs --version 2>&1 \
+  | grep '^mkdocs.*version'
+echo "===> Image wicksycv passed..."
 
 echo "===> Testing base..."
 for tools in python pip wget curl gpg
