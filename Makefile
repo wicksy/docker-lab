@@ -22,6 +22,7 @@ endif
 	$(MAKE) -C awscli newtag=${newtag}
 	$(MAKE) -C synology newtag=${newtag}
 	$(MAKE) -C tiny-nginx newtag=${newtag}
+	$(MAKE) -C wicksycv newtag=${newtag}
 
 push:
 	docker push wicksy/synology:${currenttag}
