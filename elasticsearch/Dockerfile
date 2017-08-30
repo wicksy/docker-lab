@@ -1,4 +1,4 @@
-FROM wicksy/jre-7:latest
+FROM wicksy/jre-8:latest
 
 USER root
 

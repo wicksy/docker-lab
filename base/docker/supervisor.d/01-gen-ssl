@@ -16,7 +16,7 @@ cp key.pem key.pem.orig
 openssl rsa -passin pass:x -in key.pem.orig -out key.pem
 
 # Generating certificate signing request
-openssl req -new -key key.pem -out cert.csr -subj "/C=GB/ST=GB/L=London/O=OPG/OU=Digital/CN=default"
+openssl req -new -key key.pem -out cert.csr -subj "/C=GB/ST=GB/L=London/O=Wicksy/OU=Docker/CN=default"
 
 # Generating self-signed certificate
 openssl x509 -req -days 3650 -in cert.csr -signkey key.pem -out cert.pem

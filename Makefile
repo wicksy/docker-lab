@@ -15,12 +15,14 @@ else
 endif
 	$(MAKE) -C base newtag=${newtag}
 	$(MAKE) -C jre-7 newtag=${newtag}
+	$(MAKE) -C jre-8 newtag=${newtag}
 	$(MAKE) -C elasticsearch newtag=${newtag}
 	$(MAKE) -C nginx newtag=${newtag}
 	$(MAKE) -C salt-master newtag=${newtag}
 	$(MAKE) -C awscli newtag=${newtag}
 	$(MAKE) -C synology newtag=${newtag}
 	$(MAKE) -C tiny-nginx newtag=${newtag}
+	$(MAKE) -C wicksycv newtag=${newtag}
 
 push:
 	docker push wicksy/synology:${currenttag}

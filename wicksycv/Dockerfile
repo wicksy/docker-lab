@@ -1,8 +1,10 @@
-FROM wicksy/base:latest
+FROM alpine:latest
 
 RUN apk update && \
     apk add bash && \
     apk add git && \
+    apk add python && \
+    apk add py2-pip && \
     pip install --upgrade pip && \
     pip install boto && \
     pip install boto3 && \
