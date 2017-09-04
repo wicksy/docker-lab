@@ -3,6 +3,7 @@ FROM alpine:latest
 RUN apk update && \
     apk add python && \
     apk add py2-pip && \
+    apk add bash && \
     apk add wget && \
     apk add curl && \
     apk add supervisor && \
