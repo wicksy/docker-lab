@@ -12,14 +12,16 @@ or Phusion).
 
 ```
 ➜  docker-lab git:(develop) ✗ docker images | grep 'wicksy.*latest'
-wicksy/tiny-nginx                   latest              8053e9f01c7f        39 hours ago        6.883 MB
-wicksy/synology                     latest              e8f7fd730b36        39 hours ago        157.2 MB
-wicksy/awscli                       latest              7042b9febfa2        39 hours ago        93.82 MB
-wicksy/salt-master                  latest              8434b0593fa7        39 hours ago        386.5 MB
-wicksy/nginx                        latest              8c200d0d8169        39 hours ago        116.9 MB
-wicksy/elasticsearch                latest              049b9d863a3e        39 hours ago        266.6 MB
-wicksy/jre-7                        latest              f391546816cd        39 hours ago        231.2 MB
-wicksy/base                         latest              e852ff80927a        40 hours ago        115.2 MB
+wicksy/elasticsearch   latest              e32ef61087c3        4 days ago          241MB
+wicksy/jre-8           latest              0a0ea0f78810        4 days ago          200MB
+wicksy/base            latest              db6c5a5487f2        4 days ago          130MB
+wicksy/wicksycv        latest              daf799569e61        7 days ago          145MB
+wicksy/tiny-nginx      latest              26e3feb7b398        7 days ago          6.44MB
+wicksy/synology        latest              5af77d266511        7 days ago          173MB
+wicksy/awscli          latest              e83974b207fc        7 days ago          103MB
+wicksy/salt-master     latest              c55968b52f21        7 days ago          422MB
+wicksy/nginx           latest              b957dba4f7d6        7 days ago          131MB
+wicksy/jre-7           latest              8ec61574bf91        7 days ago          245MB
 ➜  docker-lab git:(develop) ✗
 ```
 
@@ -142,6 +144,18 @@ OpenJDK 64-Bit Server VM (build 24.91-b01, mixed mode)
 ➜  ~
 ```
 
+#### jre-8
+
+Image with OpenJDK 8 (no GUI support) to be used to build containers requiring Java (e.g. Elasticsearch).
+
+```
+➜  ~ docker run wicksy/jre-8:latest java -version
+openjdk version "1.8.0_131"
+OpenJDK Runtime Environment (IcedTea 3.4.0) (Alpine 8.131.11-r2)
+OpenJDK 64-Bit Server VM (build 25.131-b11, mixed mode)
+➜  ~
+```
+
 #### elasticsearch
 
 Elasticsearch plus plugins.
@@ -151,14 +165,15 @@ Elasticsearch plus plugins.
 e950e6ed6a6408670e3e0faabba8022b5989eb3fcf1ed66cfd1294fca42cd245
 ➜  ~ curl "http://$(docker-machine ip docker-vm):9200"
 {
-  "name" : "Xi'an Chi Xan",
+  "name" : "C8KJrVa",
   "cluster_name" : "elasticdocker",
+  "cluster_uuid" : "6CtmpzGLR22xzSkz2_Zlwg",
   "version" : {
-    "number" : "2.1.1",
-    "build_hash" : "40e2c53a6b6c2972b3d13846e450e66f4375bd71",
-    "build_timestamp" : "2015-12-15T13:05:55Z",
+    "number" : "5.5.2",
+    "build_hash" : "b2f0c09",
+    "build_date" : "2017-08-14T12:33:14.154Z",
     "build_snapshot" : false,
-    "lucene_version" : "5.3.1"
+    "lucene_version" : "6.6.0"
   },
   "tagline" : "You Know, for Search"
 }
@@ -259,7 +274,7 @@ Image builds are triggered automatically and run on [Travis CI](https://travis-c
 To build locally:
 
 ```
-$ make buld
+$ make build
 ```
 
 By default `build` will not bump the version tag on the repository. To bump the tag as well:
@@ -279,15 +294,22 @@ $ make clean
 Post build tests are also run on Travis CI using the `test/test.sh` bash script.
 
 ```
-==> Starting daemon images...
-62ad1042e4b0e5756f1f6f99fa726d049b24990298fc697c58dbfe1d24083d56
-03cdc1f8f2374d4bb322d6b690cb265644535cfdfbc455102b2c2d51c9c15663
-518d929769c92a5eee8a0ccc33907a55378eb405a5a70834cff8c7d80442db59
+ubuntu@Dell-Inspiron:/srv/docker-lab$ test/test.sh
+===> Running tests against ports mapped to localhost...
+===> Cleaning up...
+54b219cda212
+===> Starting daemon images...
+27c818eccd8df9292a75a3b4c46fa54cc54ec3b9f291e65348b88df83e669a5d
+b83cc453a234d76d13b9f795ead164665c4f990e4a74456f782bacc2d0b4aa63
+66543beb5a555f1a3b6a42473dd79f5218a6891a140e231eb895de6121f9446d
 ===> Waiting for init...
 ===> Testing nginx...
+===> HTTP...
 ######################################################################## 100.0%
-<title>Welcome to nginx!</title>
-<h1>Welcome to nginx!</h1>
+          <h1>Welcome to a Docker Nginx Demo</h1>
+===> HTTPS...
+######################################################################## 100.0%
+          <h1>Welcome to a Docker Nginx Demo</h1>
 ===> Image nginx passed...
 ===> Testing tiny-nginx...
 ######################################################################## 100.0%
@@ -301,18 +323,17 @@ Post build tests are also run on Travis CI using the `test/test.sh` bash script.
 ===> Image elasticsearch passed...
 ===> Testing non-daemon images...
 ===> Testing awscli...
-aws-cli/1.10.66 Python/2.7.12 Linux/4.4.17-boot2docker botocore/1.4.56
+aws-cli/1.11.141 Python/2.7.13 Linux/4.4.0-92-generic botocore/1.6.8
 ===> Image awscli passed...
 .
 .
 .
 .
 .
-===> Image base passed...
 ===> Image testing complete...
 ===> Cleaning up...
-518d929769c9
-03cdc1f8f237
-62ad1042e4b0
-➜  docker-lab git:(develop) ✗
+66543beb5a55
+b83cc453a234
+27c818eccd8d
+ubuntu@Dell-Inspiron:/srv/docker-lab$
 ```
