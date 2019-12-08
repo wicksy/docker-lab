@@ -10,14 +10,14 @@ error() {
   echo "===> Error on line ${1}"
   echo "===> Cleaning up..."
   docker kill $(docker ps -q)
-  docker rm -fv $(docker ps -q)
+  docker rm -fv $(docker ps -aq)
 }
 
 cleanup() {
   if [[ "$(docker ps -q | wc -l)" -gt 0 ]] ; then
     echo "===> Cleaning up..."
     docker kill $(docker ps -q)
-    docker rm -fv $(docker ps -q)
+    docker rm -fv $(docker ps -aq)
   fi
 }
 
@@ -69,12 +69,12 @@ echo "===> Testing awscli..."
 docker run wicksy/awscli:latest aws --version
 echo "===> Image awscli passed..."
 
-#echo "===> Testing salt-master..."
-#docker run wicksy/salt-master:latest salt --version
-#docker run wicksy/salt-master:latest salt-master --version
-#docker run wicksy/salt-master:latest salt-minion --version
-#docker run wicksy/salt-master:latest salt-call --version
-#echo "===> Image salt-master passed..."
+# echo "===> Testing salt-master..."
+# docker run wicksy/salt-master:latest salt --version
+# docker run wicksy/salt-master:latest salt-master --version
+# docker run wicksy/salt-master:latest salt-minion --version
+# docker run wicksy/salt-master:latest salt-call --version
+# echo "===> Image salt-master passed..."
 
 echo "===> Testing jre-7..."
 docker run wicksy/jre-7:latest java -version 2>&1 \
