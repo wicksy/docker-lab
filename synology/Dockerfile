@@ -21,7 +21,7 @@ RUN apk update && \
 RUN rm -rf /var/cache/apk/*
 
 ADD docker/root /root
-RUN chmod 700 /root/.ssh
+RUN chmod -R 700 /root/.ssh
 
 RUN mkdir /scripts
 ADD docker/py/ /scripts

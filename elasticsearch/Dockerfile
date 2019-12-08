@@ -6,7 +6,7 @@ RUN addgroup elasticsearch && \
     adduser -D -h /home/elasticsearch -G elasticsearch elasticsearch && \
     mkdir -p /var/log/elasticsearch && \
     chown elasticsearch:elasticsearch /var/log/elasticsearch && \
-    mkdir /opt
+    mkdir -p /opt
 
 RUN gpg --keyserver ha.pool.sks-keyservers.net --recv-keys 46095ACC8548582C1A2699A9D27D666CD88E42B4
 
@@ -17,7 +17,7 @@ RUN curl -o /opt/es.tar.gz "https://artifacts.elastic.co/downloads/elasticsearch
     chown -R elasticsearch:elasticsearch /opt/elasticsearch-5.5.2/ && \
     rm -rf /opt/es.tar.gz
 
-RUN pip install elasticsearch-curator
+RUN pip3 install elasticsearch-curator
 
 ADD docker/confd /etc/confd
 

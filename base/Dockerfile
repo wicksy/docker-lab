@@ -1,8 +1,7 @@
 FROM alpine:latest
 
 RUN apk update && \
-    apk add python && \
-    apk add py2-pip && \
+    apk add python3 && \
     apk add bash && \
     apk add wget && \
     apk add curl && \
@@ -10,8 +9,8 @@ RUN apk update && \
     apk add gnupg && \
     apk add openssl && \
     apk add file && \
-    pip install --upgrade pip && \
-    pip install awscli
+    pip3 install --upgrade pip && \
+    pip3 install awscli
 
 RUN wget --no-check-certificate -O /usr/bin/confd https://github.com/kelseyhightower/confd/releases/download/v0.11.0/confd-0.11.0-linux-amd64 && \
     chmod a+x /usr/bin/confd && \
