@@ -1,11 +1,10 @@
 FROM alpine:latest
 
 RUN apk update && \
-    apk add python && \
-    apk add py2-pip && \
+    apk add python3 && \
     apk add groff && \
     apk add less && \
-    pip install --upgrade pip && \
-    pip install awscli
+    pip3 install --upgrade pip && \
+    pip3 install awscli
 
 CMD ["/bin/sh"]

@@ -9,18 +9,18 @@ RUN apk update && \
     apk add libzmq  && \
     apk add gcc && \
     apk add build-base && \
-    apk add python-dev && \
+    apk add python3-dev && \
     apk add openssl && \
     apk add salt && \
     apk add salt-minion && \
     apk add salt-master && \
-    pip install --upgrade pip && \
-    pip install pyyaml && \
-    pip install tornado && \
-    pip install jinja2 && \
-    pip install pyzmq && \
-    pip install pycrypto && \
-    pip install msgpack-pure
+    pip3 install --upgrade pip && \
+    pip3 install pyyaml && \
+    pip3 install tornado && \
+    pip3 install jinja2 && \
+    pip3 install pyzmq && \
+    pip3 install pycrypto && \
+    pip3 install msgpack-pure
 
 RUN mkdir -p /etc/salt /srv/salt/salt-formulas /srv/pillar
 
